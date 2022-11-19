@@ -1,71 +1,77 @@
 #include <iostream>     // cout, cin
-#include <stdlib.h>     // rand, system
+#include <stdlib.h>     // rand, srand, system
 #include <unistd.h>     // sleep
-#include <windows.h>
-#include <ctime>        // time.now
+#include <time.h>       // time.now time_t
 
 using namespace std;
 
 int main()
 {
     //0a. Define Variable
-    int m_trial = 5;
-    int n_trial = 0;
-    int score = 0;
-    int width, length ;
-    long area , userAnswer;
+    int m_trial, n_trial;
+    int score, g_timeout;
+    int width, length;
+    int area , user_area;
+    int table_size;
+    time_t user_stime, user_timeout;
+
+
+    //1a. Initiate Variables
+    g_timeout   = 5;
+    table_size  = 5;
+    m_trial     = 5;
+    n_trial     = 0;
+    score       = 0;
+    //0c. Change random based on time
+    srand(time(0));
 
     //0b. Print Game instructions
     cout << "\t\t***Welcome to my first Game :)****\n";
-    cout << "\tVision the Shape and Calculate its Area in 5 seconds. \n";
-    cout << "\n\nPress Any key to start";
-
-    //0c. Change random based on time
-    time_t user_time, user_clock;
-    int g_timeout = 5;
-    srand(time(0));
-
+    cout << "\tVision the Shape and Calculate its Area in "<<g_timeout<<" seconds. \n";
+    cout << "\n\nPress Enter to start playing ...";
     cin.get();
 
     do{
-        //1a. Initiate Variables
-        width = 2+rand()%5;
-        length = 2+rand()%5;
-        area = width * length;
-        userAnswer;
+        //------Initiate Variables repeated part
+        width       = 2+rand()%table_size;
+        length      = 2+rand()%table_size;
+        area        = width * length;
         n_trial++;
 
         //2b. padding top
         cout<<"\n\n\n";
+
         //2a. Draw the Rectangle
         for(int i=0;i<length;i++){
-            //2b. Padding
+            //2b. Padding left
             cout << "\t\t";
             for(int j=0; j<width; j++){
-                cout<<"#";
+                cout<<"# ";
             }
-            cout<<endl;
+            cout<<"\n";
         }
-        //3c. Set time
-        user_clock = time(0);
+
+        //3c. Set Start time
+        user_stime = time(0);
         //3a. Ask User
         cout<<"Area = ";
-        cin >>userAnswer;
-        user_time = time(0) - user_clock;
-        cout<<"You take " << user_time <<"s to answer!....\n";
+        cin >>user_area;
+        //3c. Set end time and calc diff
+        user_timeout = time(0) - user_stime;
+        cout<<"You take " << user_timeout <<"s to answer!....\n";
 
         //4a. Compare Answer and Give them point
-        if(userAnswer==area && user_time <= g_timeout){
+        if(user_area==area && user_timeout <= g_timeout){
             score++;
             cout<< "\tCorrect :)\n";
-        }else if(userAnswer!= area){
+        }else if(user_area!= area){
             cout<< "\tWrong :( \n";
         }else {
             cout<< "\tTimeout :|, try fast\n";
         }
 
         //4b. Clear Screen
-        sleep(2);
+        sleep(3);
         system("cls");
         for(int i=3; i>0; i--){
             cout<< "\n\t\tStart Next in "<< i << "s...\n";
@@ -78,8 +84,8 @@ int main()
     while(n_trial<m_trial);
 
     //6a. Game over and print socre
-    cout<<"GAME OVER\n";
-    cout<<"Your Score is :" <<(score*1.0/m_trial)*100.0 <<"%\n";
+    cout<<"\t\tGAME OVER\n";
+    cout<<"\t\tYour Score is :" <<(score*1.0/m_trial)*100.0 <<"%\n";
 
     return 0;
 }
