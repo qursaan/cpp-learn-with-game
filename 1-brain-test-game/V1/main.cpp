@@ -5,17 +5,45 @@
 
 using namespace std;
 
+//0a. Define Variable
+int level_width;
+int level_length;
+int user_level;
+
+int m_trial, n_trial;
+int score, g_timeout;
+int width, length;
+int area , user_area;
+int table_size;
+time_t user_stime, user_timeout;
+
+int play_again_selection;
+
+
+void select_level() {
+
+    cout << "\nChoose Level :\n \t\t 1 to Easy - 2 to Medium - 3 to Hard : ";
+    cin >> user_level;
+    if (user_level == 1) {
+        level_width = level_length = 2;
+        table_size  = 3;
+    } else if (user_level == 2) {
+        level_width = level_length = 4;
+        table_size  = 4;
+    } else if (user_level == 3) {
+        level_width = level_length = 6;
+        table_size  = 5;
+    } else {
+        cout << "Please Enter Valid Number . \n";
+        select_level();
+    }
+
+
+}
+
+
 int main()
 {
-    //0a. Define Variable
-    int m_trial, n_trial;
-    int score, g_timeout;
-    int width, length;
-    int area , user_area;
-    int table_size;
-    time_t user_stime, user_timeout;
-
-
     //1a. Initiate Variables
     g_timeout   = 5;
     table_size  = 5;
@@ -28,8 +56,7 @@ int main()
     //0b. Print Game instructions
     cout << "\t\t***Welcome to my first Game :)****\n";
     cout << "\tVision the Shape and Calculate its Area in "<<g_timeout<<" seconds. \n";
-    cout << "\n\nPress Enter to start playing ...";
-    cin.get();
+    select_level();
 
     do{
         //------Initiate Variables repeated part
