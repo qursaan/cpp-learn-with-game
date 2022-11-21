@@ -68,7 +68,7 @@ int main()
 
 
         //2b. padding top
-        cout<<"\n\n\n";
+        cout<<"\n";
 
         //2a. Draw the Rectangle
         for(int i=0;i<length;i++){
@@ -116,6 +116,15 @@ int main()
     //6a. Game over and print socre
     cout<<"\t\tGAME OVER\n";
     cout<<"\t\tYour Score is :" <<(score*1.0/m_trial)*100.0 <<"%\n";
+
+
+    // Make player play again
+    cout << "Play Again : Enter 0 ...\n";
+    cin >> play_again_selection;
+
+    if (play_again_selection == 0 ) {
+        main();
+    }
 
     return 0;
 }
