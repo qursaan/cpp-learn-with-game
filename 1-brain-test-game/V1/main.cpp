@@ -46,7 +46,6 @@ int main()
 {
     //1a. Initiate Variables
     g_timeout   = 5;
-    table_size  = 5;
     m_trial     = 5;
     n_trial     = 0;
     score       = 0;
@@ -59,11 +58,14 @@ int main()
     select_level();
 
     do{
-        //------Initiate Variables repeated part
-        width       = 2+rand()%table_size;
-        length      = 2+rand()%table_size;
-        area        = width * length;
-        n_trial++;
+        // Change table Size based on level
+        width = level_width+rand()%table_size;
+        length = level_length+rand()%table_size;
+        area = width * length;
+
+        // Score Header
+        cout << "Score : " << score << "  --  Trials : " << n_trial  << " / " << m_trial<< endl;
+
 
         //2b. padding top
         cout<<"\n\n\n";
@@ -83,6 +85,7 @@ int main()
         //3a. Ask User
         cout<<"Area = ";
         cin >>user_area;
+        n_trial++;
         //3c. Set end time and calc diff
         user_timeout = time(0) - user_stime;
         cout<<"You take " << user_timeout <<"s to answer!....\n";
