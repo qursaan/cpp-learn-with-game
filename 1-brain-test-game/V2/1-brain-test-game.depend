@@ -5,3 +5,11 @@
 	<unistd.h>
 	<time.h>
 
+1670085277 source:c:\users\qursa\desktop\projects\cpp-learn-with-game\1-brain-test-game\v2\main.cpp
+	<iostream>
+	<stdlib.h>
+	<unistd.h>
+	<time.h>
+	<conio.h>
+	<iomanip>
+

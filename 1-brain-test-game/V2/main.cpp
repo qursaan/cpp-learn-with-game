@@ -2,8 +2,57 @@
 #include <stdlib.h>     // rand, srand, system
 #include <unistd.h>     // sleep
 #include <time.h>       // time.now time_t
+#include <conio.h>      // getch
+#include <iomanip>      // setw
 
 using namespace std;
+
+// @V2 Print N of Chars in One Line
+void print_nchars_line(int n, char c){
+    for(int i=0;i<n;++i){
+        cout<<c;
+    }
+    cout<<"\n";
+}
+
+// @V2 Clear and Print Game Header contains Trial Number and Level
+void game_header(int ntrial,int mtrail, int level){
+
+    system("cls");
+    //print header 50 * in line
+    print_nchars_line(50,'-');
+
+    cout << "| Trial: " << ntrial << "/" << mtrail;
+    //align level into right
+    cout << setw(35) << "Level: " << level << " |" <<endl;
+
+    //print header 50 * in line
+    print_nchars_line(50,'-');
+}
+
+// @V2 Print a waiting message with count down N Seconds
+void start_after(int sec){
+    cout<< "\n\t\tStart in ";
+    for(int i=sec; i>0; i--){
+        cout << i << "s...";
+        sleep(1);
+        cout <<"\b\b\b\b\b";
+    }
+}
+
+// @V2 Print and Get user Level number
+int get_user_level(){
+    int level;
+    cout << "\nChoose Challenge Level [1-3]:\n -1- Easy\n -2- Medium\n -3- Hard\n> ";
+    cin >> level;
+    while(level > 3 || level < 1){
+        cout<< "Enter a valid level [1-3]: ";
+        cin >> level;
+    }
+    cout << "YOU CHOOSE " << (level==1?"EASY":level==2?"MEDIUM":"HARD") << " LEVEL :)\n";
+    return level;
+}
+
 
 int main()
 {
@@ -14,10 +63,10 @@ int main()
     int area , user_area;
     int table_size;
     time_t user_stime, user_timeout;
+    int level;
 
 
     //1a. Initiate Variables
-    g_timeout   = 5;
     table_size  = 5;
     m_trial     = 5;
     n_trial     = 0;
@@ -26,17 +75,32 @@ int main()
     srand(time(0));
 
     //0b. Print Game instructions
-    cout << "\t\t***Welcome to my first Game :)****\n";
-    cout << "\tVision the Shape and Calculate its Area in "<<g_timeout<<" seconds. \n";
-    cout << "\n\nPress Enter to start playing ...";
-    cin.get();
+    print_nchars_line(50,'-');
+    cout << "|\t Welcome to my first Game :)\t\t |\n";
+    cout << "|Vision Shape and Cal. its Area in a few seconds.|\n";
+    print_nchars_line(50,'-');
+    cout << "\n\nPress Any to start playing ...";
+    getch(); //<- @V2 correct this line
+
+    //@V2 Clear hole above line from output
+    cout <<"\r\t\t\t\t\t\t";
+    //@V2 Get user level and store in local variable.
+    level = get_user_level();
+
+    //@V2 Start game after 3 second
+    start_after(3);
 
     do{
         //------Initiate Variables repeated part
-        width       = 2+rand()%table_size;
-        length      = 2+rand()%table_size;
+        //@V2 Set tablesize and timeout based on level
+        width       = (2*level)+rand()%(table_size+(level-1)*2);
+        length      = (2*level)+rand()%(table_size+(level-1)*2);
+        g_timeout   = 6-level;
         area        = width * length;
         n_trial++;
+
+        //@V2 Show the game header
+        game_header(n_trial, m_trial, level);
 
         //2b. padding top
         cout<<"\n\n\n";
@@ -71,21 +135,17 @@ int main()
         }
 
         //4b. Clear Screen
-        sleep(3);
-        system("cls");
-        for(int i=3; i>0; i--){
-            cout<< "\n\t\tStart Next in "<< i << "s...\n";
-            sleep(1);
-            system("cls");
-        }
-
+        //@V2 Clear Screen and ReShow header
+        game_header(n_trial, m_trial, level);
+        //@V2 Wait before replay
+        start_after(3);
     }
     //5a. Check the number of trial
     while(n_trial<m_trial);
 
     //6a. Game over and print socre
-    cout<<"\t\tGAME OVER\n";
-    cout<<"\t\tYour Score is :" <<(score*1.0/m_trial)*100.0 <<"%\n";
+    cout<<"\n\t\tGAME OVER\n";
+    cout<<"\n\t\tYour Score is :" <<(score*1.0/m_trial)*100.0 <<"%\n";
 
     return 0;
 }
