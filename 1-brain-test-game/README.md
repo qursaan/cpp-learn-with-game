@@ -41,7 +41,7 @@
 ### What was in this version
 
 1. Print Rectange Boarder arround The Game.
-2. Everything inside the Game boarder must be centered.
+2. Everything inside the Game boarder centered.
 3. Color Game Boarder
 4. Move Cursor to User input inside the box
 
