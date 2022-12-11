@@ -34,3 +34,19 @@
 3. Add Score into the header.
 4. Print Rectange Boarder arround The Game.
 5. Everything inside the Game boarder must be centered.
+
+
+## Version 3
+
+### What was in this version
+
+1. Print Rectange Boarder arround The Game.
+2. Everything inside the Game boarder must be centered.
+
+### What expected in the next version
+
+1. User can play more than one time.
+2. User can skip the current playing.
+3. Add Score into the header.
+4. Display a menu to user So user can switch between games
+5. Add Second visual game
