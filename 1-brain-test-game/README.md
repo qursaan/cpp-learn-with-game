@@ -32,8 +32,8 @@
 1. User can play more than one time.
 2. User can skip the current playing.
 3. Add Score into the header.
-4. Print Rectange Boarder arround The Game.
-5. Everything inside the Game boarder must be centered.
+4. Print Rectange border arround The Game.
+5. Everything inside the Game border must be centered.
 
 
 ## Version 3
@@ -41,8 +41,8 @@
 ### What done in this version
 
 1. Print Rectange Boarder arround The Game.
-2. Everything inside the Game boarder centered.
-3. Color Game Boarder
+2. Everything inside the Game border centered.
+3. Color Game Border
 4. Move Cursor to User input inside the box
 
 ### What expected in the next version
