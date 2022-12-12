@@ -11,9 +11,9 @@ using namespace std;
 HANDLE cout_handle = GetStdHandle(STD_OUTPUT_HANDLE); //@V3
 
 // @V3 to move cursor over console
-void moveCursor(std::ostream& os, int col, int row)
+void moveCursor(int col, int row)
 {
-  os << "\033[" << col << ";" << row << "H";
+  cout << "\033[" << col << ";" << row << "H";
 }
 // @V3 to change color between game and border
 void change_color(bool isBorder){
@@ -181,7 +181,7 @@ int main()
         int answer_inLine = ++n_lines; // get the line of answer
         game_footer();
 
-        moveCursor(std::cout, answer_inLine,29); //move cursor back to answer line
+        moveCursor(answer_inLine,29); //move cursor back to answer line
 
         cin >>user_area;
         //3c. Set end time and calc diff

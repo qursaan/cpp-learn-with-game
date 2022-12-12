@@ -13,3 +13,13 @@
 	<conio.h>
 	<iomanip>
 
+1670798712 source:c:\users\qursa\desktop\projects\cpp-learn-with-game\1-brain-test-game\v3\main.cpp
+	<iostream>
+	<stdlib.h>
+	<unistd.h>
+	<time.h>
+	<conio.h>
+	<iomanip>
+	<string.h>
+	<windows.h>
+
