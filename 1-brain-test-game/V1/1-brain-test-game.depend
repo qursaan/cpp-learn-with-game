@@ -1,7 +1,0 @@
-# depslib dependency file v1.0
-1668862028 source:c:\users\qursa\desktop\projects\cpp-learn-with-game\1-brain-test-game\main.cpp
-	<iostream>
-	<stdlib.h>
-	<unistd.h>
-	<time.h>
-
