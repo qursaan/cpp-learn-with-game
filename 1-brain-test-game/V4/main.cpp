@@ -9,6 +9,7 @@
 using namespace std;
 
 HANDLE cout_handle = GetStdHandle(STD_OUTPUT_HANDLE); //@V3
+int game_width     = 50;
 
 // @V3 to move cursor over console
 void moveCursor(int col, int row)
@@ -81,7 +82,7 @@ void game_footer(){
 
 // @V2 Print a waiting message with count down N Seconds
 void start_after(int sec){
-    cout<< "\n\t\tStart in ";
+    cout<< "\n\t\tContinue in ";
     for(int i=sec; i>0; i--){
         cout << i << "s...";
         sleep(1);
@@ -102,10 +103,8 @@ int get_user_level(){
     return level;
 }
 
-
-int main()
-{
-    //0a. Define Variable
+void math_game(){
+     //0a. Define Variable
     int m_trial, n_trial;
     int score, g_timeout;
     int width, length;
@@ -113,25 +112,15 @@ int main()
     int table_size;
     time_t user_stime, user_timeout;
     int level;
-    int game_width;
     int n_lines; //total number of lines
 
     //1a. Initiate Variables
-    game_width  = 50;
     table_size  = 5;
     m_trial     = 5;
     n_trial     = 0;
     score       = 0;
     n_lines     = 0;
-    //0c. Change random based on time
-    srand(time(0));
 
-    //0b. Print Game instructions
-    print_nchars_line(game_width,'-');
-    cout << "|\t Welcome to my first Game :)\t\t |\n";
-    cout << "|Vision Shape and Cal. its Area in a few seconds.|\n";
-    print_nchars_line(game_width,'-');
-    system("pause");// @V3
 
     //@V2 Get user level and store in local variable.
     level = get_user_level();
@@ -207,5 +196,162 @@ int main()
     cout<<"\n\t\tGAME OVER\n";
     cout<<"\n\t\tYour Score is :" <<(score*1.0/m_trial)*100.0 <<"%\n";
     game_footer();
+}
+
+void vision_game(){
+    const int dim = 10;         //arrow box width
+    char arr[dim][dim];
+    char arrow[4] = {'<','>','^','v'};
+    int n_lines = 0;            //to count num of lines
+    int a_dir_all,a_dir_other;  //to select arrow direction
+    int a_num;                  //to count n of arrow
+    int a_col, a_row;           //to select position of arrow
+    int user_dir;               //to take user dir
+    int m_trial=5, n_trial=0, level=1;
+    int score, g_timeout;
+    time_t user_stime, user_timeout;
+
+    do{
+        n_trial++;
+        start_after(1);
+        //------Initiate Variables repeated part
+
+        //fill array with empty string
+        for(int i=0;i<dim;i++){
+            for(int j=0;j<dim;j++){
+                arr[i][j] = ' ';
+            }
+        }
+
+        //select the random arrow
+        a_dir_all   = rand()%4; //Four directions
+        a_dir_other = rand()%4; //Choose the other direction
+
+        //if all == other change other direction by 1
+        //you can use any other way
+        if(a_dir_all == a_dir_other){
+            a_dir_other = (a_dir_other+1)%4;
+        }
+
+        //from 30 to 40 random arrows
+        a_num = 30+rand()%11;
+
+
+        //set N arrows at random position;
+        for(int k=0;k<a_num;++k){
+            a_col = rand()%dim;
+            a_row = rand()%dim;
+            arr[a_row][a_col] = arrow[a_dir_all];
+        }
+
+        //set other arrow at random positon
+        a_col = rand()%dim;
+        a_row = rand()%dim;
+        arr[a_row][a_col] = arrow[a_dir_other];
+
+
+        //Show the game header
+        game_header(n_trial, m_trial, level);
+        //header take 3 lines
+        n_lines = 3;
+
+        //padding top
+        for(int i=0; i<3; i++)
+            print_centered(" ",game_width);
+        n_lines+=3; //3 line padding
+
+
+        //Draw the Arrows
+        for(int i=0;i<dim;i++){
+            string arr_line= "";
+            for(int j=0; j<dim; j++){
+                arr_line += arr[i][j];
+            }
+            print_centered(arr_line, game_width);
+            ++n_lines;
+        }
+
+        //padding again
+        for(int i=0; i<3; i++)
+            print_centered(" ",game_width);
+        n_lines+=3; //3 line padding
+
+        print_centered("DIR = (1 '<', 2 '>', 3 '^', 4 'v'): ", game_width);
+        int answer_inLine = ++n_lines; // get the line of answer
+
+        game_footer();
+
+        //wait 2 sec
+        sleep(2);
+        game_header(n_trial, m_trial, level);
+
+        //go to the same line
+         for(int i=0; i<n_lines-3; i++)
+            print_centered(" ",game_width);
+        game_footer();
+
+        moveCursor(answer_inLine,0); //move cursor back to answer line
+        print_centered("DIR = (1 '<', 2 '>', 3 '^', 4 'v'): ", game_width);
+        moveCursor(answer_inLine,43); //move cursor back to answer line
+        //Set Start time
+        user_stime = time(0);
+
+        cin >>user_dir;
+        user_timeout = time(0) - user_stime;
+        print_centered("You take " + to_string(user_timeout)+ "s to answer!....", game_width);
+
+        //4a. Compare Answer and Give them point
+        if(user_dir==(a_dir_other+1) && user_timeout <= g_timeout){
+            score++;
+            print_centered("Correct :)",game_width);
+        }else if(user_dir!= (a_dir_other+1)){
+            print_centered("Wrong :( ",game_width);
+        }else {
+            print_centered("Timeout :|, try fast",game_width);
+        }
+        game_footer();
+    }
+    //5a. Check the number of trial
+    while(n_trial<m_trial);
+
+    game_header(n_trial, m_trial, level);
+    //6a. Game over and print socre
+    cout<<"\n\t\tGAME OVER\n";
+    cout<<"\n\t\tYour Score is :" <<(score*1.0/m_trial)*100.0 <<"%\n";
+    game_footer();
+}
+
+int main()
+{
+    //0c. Change random based on time
+    srand(time(0));
+    //0b. Print Game instructions
+    print_nchars_line(game_width,'-');
+    cout << "|\t Welcome to my first Game :)\t\t |\n";
+    print_nchars_line(game_width,'-');
+
+    cout<< "\nChoose the game:\n"
+        << "  1. Math Test\n"
+        << "  2. Vision Test\n"
+        << "Any. End Game.\n";
+
+    int game=0;
+    cout<< "Enter your choice: ";
+    cin >> game;
+
+    switch (game){
+    case 1:
+        cout<<"Vision Shape and Cal. its Area in a few seconds.\n";
+        system("pause");// @V3
+        math_game();
+        break;
+    case 2:
+        cout<<"Vision the Arrow and Determine the Distinct in a few seconds.\n";
+        system("pause");// @V3
+        vision_game();
+        break;
+    default:
+        cout<< "See you later! :)"<<endl;
+    }
     return 0;
 }
