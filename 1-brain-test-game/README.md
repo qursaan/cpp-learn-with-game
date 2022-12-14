@@ -52,3 +52,18 @@
 3. Add Score into the header.
 4. Display a menu to user So user can switch between games
 5. Add Second visual game
+
+## Version 4
+
+### What done in this version
+
+1. Display a menu to user So user can switch between games
+2. Add Second visual game
+
+### What expected in the next version
+
+1. User can play more than one time.
+2. User can skip the current playing.
+3. Add Score into the header.
+
+
