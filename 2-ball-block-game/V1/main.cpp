@@ -6,7 +6,7 @@
 
 #define KEY_LEFT    77
 #define KEY_RIGHT   75
-#define GAME_WIDTH  50
+#define GAME_WIDTH  40
 
 using namespace std;
 HANDLE cout_handle = GetStdHandle(STD_OUTPUT_HANDLE); //@V3
@@ -60,14 +60,14 @@ void game_header(int ntrial,int mtrail, int level){
 
     change_color(true);
     //print header 50 * in line
-    print_nchars_line(50,'=');
+    print_nchars_line(GAME_WIDTH,'=');
 
     cout << "| LIVES: " << ntrial << "/" << mtrail;
     //align level into right
-    cout << setw(35) << "LEVEL: " << level << " |" <<endl;
+    cout << setw(GAME_WIDTH-15) << "LEVEL: " << level << " |" <<endl;
 
     //print header 50 * in line
-    print_nchars_line(50,'=');
+    print_nchars_line(GAME_WIDTH,'=');
 
     change_color(false);
 }
@@ -76,7 +76,7 @@ void game_header(int ntrial,int mtrail, int level){
 void game_footer(){
     change_color(true);
     //print header 50 * in line
-    print_nchars_line(50,'=');
+    print_nchars_line(GAME_WIDTH,'=');
     change_color(false);
 }
 
